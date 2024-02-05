@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: Ayush-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Ayush-login
+          uri: lb://Ayush-login
+          predicates:
+          - Path=/auth/**
+        - id: Ayush-dashboard
+          uri: lb://Ayush-dashboard
+          predicates:
+          - Path=/dashboard/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+server:
+  port: 9093
+eureka:
+  instance:
+    hostname: localhost
